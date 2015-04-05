@@ -1,0 +1,61 @@
+﻿@using DoXpres.DicGen.Web
+@inherits WebViewPage
+
+<!DOCTYPE html>
+
+<html data-ng-app="DicGenApp">
+
+	<head>
+		<title>DicGen - Generate your personal dictionary for Android</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href='http://fonts.googleapis.com/css?family=Jura' rel='stylesheet' type='text/css'>
+		<link type="text/css" rel="stylesheet" href="~/Resources/Styles/DicGen.css" />
+		<link rel="icon" href="~/Resources/Images/favicon.ico" sizes="16x16">
+		<script type="text/javascript" src="~/Resources/Scripts/angular.min.js"></script>
+		<script type="text/javascript" src="~/Resources/Scripts/DicGen.js"></script>
+		<script type="text/javascript">DicGenApp.value("ApiUrl", "@(WebConfigReader.Get<string>("ApiUrl"))");</script>
+	</head>
+
+	<body data-ng-controller="DicGenController">
+
+		<section>
+			<div class="section bg-container">
+				<h1>DicGen</h1>
+				<h3>{Generate your personal dictionary for Android}</h3>
+				<span>
+					Input any text and get one word per line, without any useless words or characters.<br/>
+					The generated result can be stored in a text file and then loaded into Android, for example using
+					<a href="https://play.google.com/store/apps/details?id=com.usr.dict.mgr" target="_blank">UDM</a>.
+				</span>
+			</div>
+
+			<div class="section">
+				<span class="input-container">
+					<input type="radio" data-ng-model="SortOrder" id="Alphabetically" name="Alphabetically" value="Alphabetically">
+					<label for="Alphabetically">Alphabetically</label>
+				</span>
+				<span class="input-container">
+					<input type="radio" data-ng-model="SortOrder" id="WordLength" name="WordLength" value="WordLength">
+					<label for="WordLength">Word Length</label>
+				</span>
+				<span class="input-container">
+					<input type="checkbox" data-ng-change="Render()" data-ng-model="ShowOnOneLine" name="ShowOnOneLine" value="ShowOnOneLine"> 
+					<label for="WordLength">Show on one line</label>
+				</span>
+				<span class="input-container">
+					<button data-ng-click="Generate(text)">GenDic</button>
+				</span>
+				<span class="status-loading-icon" data-ng-if="IsLoading">
+					<img src="~/Resources/Images/loading-icon.gif"/>
+				</span>
+			</div>
+		</section>
+
+		<section data-fill-up>
+			<textarea data-ng-model="Text" data-set-background data-type-text="Please type or copy your text here...
+Press 'GenDic' to generate your dictionary."></textarea>
+		</section>
+
+	</body>
+
+</html>
